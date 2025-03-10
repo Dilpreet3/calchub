@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CalcHub - Financial Tools</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #007BFF;   /* Blue */
+      --dark-blue: #0056b3;      /* Darker Blue */
+      --text-color: #000;        /* Black text */
+      --bg-color: #fff;          /* White background */
+    }
+
+    /* Global Styles & Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary-blue);
+      color: var(--bg-color);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--bg-color);
+    }
+    nav {
+      position: relative;
+    }
+    .menu {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+    .menu li a {
+      font-weight: 500;
+      color: var(--bg-color);
+      transition: color 0.3s;
+    }
+    .menu li a:hover {
+      color: var(--dark-blue);
+    }
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      height: 3px;
+      width: 25px;
+      background-color: var(--bg-color);
+      margin-bottom: 4px;
+      border-radius: 3px;
+      transition: background-color 0.3s;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 450px;
+      background: var(--primary-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--bg-color);
+    }
+    .hero-content {
+      padding: 0 1rem;
+      animation: fadeInUp 1s ease-out;
+    }
+    .hero-content h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Tools Section */
+    .tools {
+      padding: 3rem 0;
+    }
+    .tools .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+    .tool-card {
+      background-color: var(--bg-color);
+      border: 2px solid var(--primary-blue);
+      border-radius: 12px;
+      text-align: center;
+      padding: 2rem 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .tool-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .tool-card svg {
+      width: 80px;
+      height: 80px;
+      fill: var(--primary-blue);
+      margin-bottom: 1rem;
+      transition: fill 0.3s ease;
+    }
+    .tool-card:hover svg {
+      fill: var(--dark-blue);
+    }
+    .tool-card h3 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--primary-blue);
+      color: var(--bg-color);
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .menu {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: var(--primary-blue);
+        flex-direction: column;
+        align-items: flex-start;
+        width: 200px;
+        padding: 1rem;
+        display: none;
+        border-radius: 8px;
+      }
+      .menu.active {
+        display: flex;
+      }
+      .menu li {
+        margin: 1rem 0;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h1>CalcHub</h1>
+      </div>
+      <nav>
+        <ul class="menu">
+          <li><a href="#emi">EMI Calculator</a></li>
+          <li><a href="#loan">Loan Calculator</a></li>
+          <li><a href="#savings">Savings Calculator</a></li>
+          <li><a href="#investment">Investment Calculator</a></li>
+        </ul>
+        <div class="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Welcome to CalcHub</h2>
+      <p>Your ultimate destination for financial tools.</p>
+    </div>
+  </section>
+  
+  <!-- Tools Section -->
+  <section class="tools">
+    <div class="container">
+      <!-- EMI Calculator Card -->
+      <div class="tool-card" id="emi">
+        <a href="emi.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M19,3H5C3.89,3,3,3.89,3,5v14c0,1.11,0.89,2,2,2h14
+              c1.11,0,2-0.89,2-2V5C21,3.89,20.11,3,19,3z M19,19H5V5h14V19z"/>
+            <path d="M11,7H9v2h2V7z M15,7h-2v2h2V7z M11,11H9v2h2V11z M15,11h-2v2h2V11z"/>
+          </svg>
+          <h3>EMI Calculator</h3>
+        </a>
+      </div>
+      <!-- Loan Calculator Card -->
+      <div class="tool-card" id="loan">
+        <a href="loan.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 
+              10-4.48 10-10S17.52 2 12 2zm1 17.93c-2.83.48-5.42-.78-7-3.21 
+              1.15-1.1 2.75-1.7 4.38-1.62 
+              1.12.05 2.19.36 3.08.87 
+              1.13-.73 2.5-1.1 3.85-1.03 1.48.09 2.9.58 4.12 1.33 
+              C19.21 15.95 16.66 18.12 13 19.93z"/>
+          </svg>
+          <h3>Loan Calculator</h3>
+        </a>
+      </div>
+      <!-- Savings Calculator Card -->
+      <div class="tool-card" id="savings">
+        <a href="savings.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+              2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09 
+              C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+              22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <h3>Savings Calculator</h3>
+        </a>
+      </div>
+      <!-- Investment Calculator Card -->
+      <div class="tool-card" id="investment">
+        <a href="investment.html">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 7.77L18.39 18H5.61L12 7.77M12 2L1 21h22L12 2z"/>
+          </svg>
+          <h3>Investment Calculator</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CalcHub. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script>
+    // Responsive menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    menuToggle.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
