@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CalcHub - Mortgage Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #007BFF;
+      --dark-blue: #0056b3;
+      --text-color: #000;
+      --bg-color: #fff;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+    header { background-color: var(--primary-blue); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo h1 { font-size: 1.8rem; font-weight: 600; color: var(--bg-color); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul li a { font-weight: 500; color: var(--bg-color); transition: color 0.3s; }
+    nav ul li a:hover { color: var(--dark-blue); }
+    .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+    .menu-toggle span { height: 3px; width: 25px; background-color: var(--bg-color); margin-bottom: 4px; border-radius: 3px; }
+    .calculator { padding: 3rem 0; }
+    .calculator h2 { text-align: center; margin-bottom: 2rem; font-size: 2.5rem; color: var(--primary-blue); }
+    .calculator form {
+      max-width: 500px; margin: auto; background-color: var(--bg-color);
+      padding: 2rem; border: 2px solid var(--primary-blue);
+      border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    button {
+      width: 100%; padding: 0.75rem; background-color: var(--primary-blue);
+      color: var(--bg-color); border: none; border-radius: 6px;
+      font-size: 1rem; cursor: pointer; transition: background-color 0.3s;
+    }
+    button:hover { background-color: var(--dark-blue); }
+    #result { margin-top: 1.5rem; text-align: center; font-size: 1.2rem; font-weight: 600; }
+    footer { background-color: var(--primary-blue); padding: 1.5rem 0; text-align: center; }
+    footer p { font-size: 0.9rem; color: var(--bg-color); }
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; position: absolute; top: 60px; right: 0; background-color: var(--primary-blue);
+               width: 200px; padding: 1rem; display: none; border-radius: 8px; }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: flex; }
+      nav ul li { margin: 1rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo"><h1>CalcHub</h1></div>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="mortgage.html">Mortgage</a></li>
+          <li><a href="retirement.html">Retirement</a></li>
+          <li><a href="debt.html">Debt Payoff</a></li>
+          <li><a href="compound.html">Compound Interest</a></li>
+          <li><a href="budget.html">Budget Planner</a></li>
+          <li><a href="tax.html">Tax Calculator</a></li>
+          <li><a href="inflation.html">Inflation</a></li>
+          <li><a href="currency.html">Currency</a></li>
+          <li><a href="ratios.html">Ratios</a></li>
+        </ul>
+        <div class="menu-toggle">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mortgage Calculator Main Content -->
+  <main>
+    <section class="calculator">
+      <div class="container">
+        <h2>Mortgage Calculator</h2>
+        <form id="mortgageForm">
+          <div class="form-group">
+            <label for="loanAmount">Loan Amount</label>
+            <input type="number" id="loanAmount" placeholder="Enter loan amount" required>
+          </div>
+          <div class="form-group">
+            <label for="interestRate">Annual Interest Rate (%)</label>
+            <input type="number" id="interestRate" placeholder="Enter annual interest rate" required step="0.01">
+          </div>
+          <div class="form-group">
+            <label for="loanTenure">Loan Tenure (Years)</label>
+            <input type="number" id="loanTenure" placeholder="Enter loan tenure" required>
+          </div>
+          <button type="submit">Calculate Mortgage</button>
+        </form>
+        <div id="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CalcHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mortgage Calculator Logic
+    document.getElementById('mortgageForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var principal = parseFloat(document.getElementById('loanAmount').value);
+      var annualInterestRate = parseFloat(document.getElementById('interestRate').value);
+      var years = parseFloat(document.getElementById('loanTenure').value);
+      
+      var monthlyRate = annualInterestRate / 100 / 12;
+      var numberOfMonths = years * 12;
+      
+      var emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, numberOfMonths)) /
+                (Math.pow(1 + monthlyRate, numberOfMonths) - 1);
+      var totalPayment = emi * numberOfMonths;
+      var totalInterest = totalPayment - principal;
+      
+      if (!isNaN(emi) && isFinite(emi)) {
+        document.getElementById('result').innerHTML = `
+          <h3>Monthly Payment: ${emi.toFixed(2)}</h3>
+          <p>Total Payment: ${totalPayment.toFixed(2)}</p>
+          <p>Total Interest: ${totalInterest.toFixed(2)}</p>
+        `;
+      } else {
+        document.getElementById('result').innerHTML = '<h3>Please enter valid numbers.</h3>';
+      }
+    });
+    
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    menuToggle.addEventListener('click', () => { menu.classList.toggle('active'); });
+  </script>
+</body>
+</html>
