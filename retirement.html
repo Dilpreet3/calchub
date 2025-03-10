@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CalcHub - Retirement Calculator</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #007BFF;
+      --dark-blue: #0056b3;
+      --text-color: #000;
+      --bg-color: #fff;
+    }
+    /* Global Reset & Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+    /* Header */
+    header { background-color: var(--primary-blue); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+    header .container { display: flex; justify-content: space-between; align-items: center; }
+    .logo h1 { font-size: 1.8rem; font-weight: 600; color: var(--bg-color); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul li a { font-weight: 500; color: var(--bg-color); transition: color 0.3s; }
+    nav ul li a:hover { color: var(--dark-blue); }
+    .menu-toggle { display: none; flex-direction: column; cursor: pointer; }
+    .menu-toggle span { height: 3px; width: 25px; background-color: var(--bg-color); margin-bottom: 4px; border-radius: 3px; }
+    /* Main Calculator Section */
+    .calculator {
+      padding: 3rem 0;
+    }
+    .calculator h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.5rem;
+      color: var(--primary-blue);
+    }
+    .calculator form {
+      max-width: 500px; margin: auto; background-color: var(--bg-color);
+      padding: 2rem; border: 2px solid var(--primary-blue);
+      border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+    input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    button {
+      width: 100%; padding: 0.75rem; background-color: var(--primary-blue);
+      color: var(--bg-color); border: none; border-radius: 6px;
+      font-size: 1rem; cursor: pointer; transition: background-color 0.3s;
+    }
+    button:hover { background-color: var(--dark-blue); }
+    #result { margin-top: 1.5rem; text-align: center; font-size: 1.2rem; font-weight: 600; }
+    /* Footer */
+    footer { background-color: var(--primary-blue); padding: 1.5rem 0; text-align: center; }
+    footer p { font-size: 0.9rem; color: var(--bg-color); }
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul { flex-direction: column; position: absolute; top: 60px; right: 0;
+               background-color: var(--primary-blue); width: 200px; padding: 1rem; display: none; border-radius: 8px; }
+      nav ul.active { display: flex; }
+      .menu-toggle { display: flex; }
+      nav ul li { margin: 1rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="logo"><h1>CalcHub</h1></div>
+      <nav>
+        <ul class="menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="retirement.html">Retirement</a></li>
+          <li><a href="mortgage.html">Mortgage</a></li>
+          <li><a href="debt.html">Debt Payoff</a></li>
+          <li><a href="compound.html">Compound Interest</a></li>
+          <li><a href="budget.html">Budget Planner</a></li>
+          <li><a href="tax.html">Tax Calculator</a></li>
+          <li><a href="inflation.html">Inflation</a></li>
+          <li><a href="currency.html">Currency</a></li>
+          <li><a href="ratios.html">Ratios</a></li>
+        </ul>
+        <div class="menu-toggle">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Retirement Calculator Main Content -->
+  <main>
+    <section class="calculator">
+      <div class="container">
+        <h2>Retirement Calculator</h2>
+        <form id="retirementForm">
+          <div class="form-group">
+            <label for="currentAge">Current Age</label>
+            <input type="number" id="currentAge" placeholder="Enter your current age" required>
+          </div>
+          <div class="form-group">
+            <label for="retirementAge">Retirement Age</label>
+            <input type="number" id="retirementAge" placeholder="Enter your retirement age" required>
+          </div>
+          <div class="form-group">
+            <label for="currentSavings">Current Savings</label>
+            <input type="number" id="currentSavings" placeholder="Enter your current savings" required>
+          </div>
+          <div class="form-group">
+            <label for="monthlyContribution">Monthly Contribution</label>
+            <input type="number" id="monthlyContribution" placeholder="Enter monthly contribution" required>
+          </div>
+          <div class="form-group">
+            <label for="annualReturn">Expected Annual Return (%)</label>
+            <input type="number" id="annualReturn" placeholder="Enter annual return rate" required step="0.01">
+          </div>
+          <button type="submit">Calculate Retirement Savings</button>
+        </form>
+        <div id="result"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 CalcHub. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Retirement Calculator Logic
+    document.getElementById('retirementForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var currentAge = parseFloat(document.getElementById('currentAge').value);
+      var retirementAge = parseFloat(document.getElementById('retirementAge').value);
+      var currentSavings = parseFloat(document.getElementById('currentSavings').value);
+      var monthlyContribution = parseFloat(document.getElementById('monthlyContribution').value);
+      var annualReturn = parseFloat(document.getElementById('annualReturn').value);
+      
+      var yearsToRetire = retirementAge - currentAge;
+      var numberOfMonths = yearsToRetire * 12;
+      var monthlyRate = annualReturn / 100 / 12;
+      
+      // Future value of current savings
+      var futureValueCurrent = currentSavings * Math.pow(1 + monthlyRate, numberOfMonths);
+      // Future value of monthly contributions (annuity formula)
+      var futureValueContributions = monthlyContribution * ((Math.pow(1 + monthlyRate, numberOfMonths) - 1) / monthlyRate);
+      
+      var totalRetirementSavings = futureValueCurrent + futureValueContributions;
+      
+      if (!isNaN(totalRetirementSavings) && isFinite(totalRetirementSavings)) {
+        document.getElementById('result').innerHTML = `<h3>Total Retirement Savings: ${totalRetirementSavings.toFixed(2)}</h3>`;
+      } else {
+        document.getElementById('result').innerHTML = '<h3>Please enter valid numbers.</h3>';
+      }
+    });
+    
+    // Responsive menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    menuToggle.addEventListener('click', () => { menu.classList.toggle('active'); });
+  </script>
+</body>
+</html>
